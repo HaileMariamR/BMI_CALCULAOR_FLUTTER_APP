@@ -18,6 +18,7 @@ class BMI extends StatelessWidget {
         accentColor: Colors.purple,
         scaffoldBackgroundColor: Color(0xFF0A0E21),
         textTheme: TextTheme(
+          // ignore: deprecated_member_use
           body1: TextStyle(
             color: Colors.white,
           ),
