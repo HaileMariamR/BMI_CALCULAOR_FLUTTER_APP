@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'ResuseableCard.dart';
-import 'IconContent.dart';
-import 'constants.dart';
+import '../components/ResuseableCard.dart';
+import '../components/IconContent.dart';
+import '../constants.dart';
+import './result.dart';
+import '../components/bottombtn.dart';
+import 'package:bmi/bmi_calculator.dart';
 
 const activecolor = Color(0xFF1D1E33);
 const inactiveColor = Color(0xFF111328);
@@ -195,12 +198,21 @@ class _InputPageState extends State<InputPage> {
               )),
             ],
           )),
-          Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Colors.purple,
-            margin: EdgeInsets.only(top: 10),
-            child: Center(child: Text("Calculate")),
+          BottomBtn(
+            nameofbtn: "Calculate",
+            onTap: () {
+              BMIcalculator bmicalc =
+                  BMIcalculator(weight: weight, height: height);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultPage(
+                            bmiresult: bmicalc.calculate_bmi(),
+                            resultText: bmicalc.getResult(),
+                            info: bmicalc.getInfo(),
+                          )));
+            },
           )
         ],
       ),
