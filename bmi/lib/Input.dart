@@ -15,9 +15,10 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Color maleColor = inactiveColor;
-  Color femaleColor = Colors.red;
+  Color femaleColor = inactiveColor;
   int height = 180;
   int weight = 100;
+  int age = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -130,15 +131,24 @@ class _InputPageState extends State<InputPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        RoundWidget(
-                          roundChild: Icon(Icons.add),
+                        RoundIconBtn(
+                          onPressed: () {
+                            setState(() {
+                              weight++;
+                            });
+                          },
+                          iconData: Icons.add,
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        RoundWidget(
-                          roundChild: Icon(Icons.minimize),
-                        )
+                        RoundIconBtn(
+                            onPressed: () {
+                              setState(() {
+                                weight--;
+                              });
+                            },
+                            iconData: Icons.minimize)
                       ],
                     )
                   ],
@@ -147,6 +157,41 @@ class _InputPageState extends State<InputPage> {
               Expanded(
                   child: ResuseableCard(
                 inputColor: Color(0xFF1D1E33),
+                cardChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Age",
+                      style: lableTextStyle,
+                    ),
+                    Text(
+                      "${age}",
+                      style: numberTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RoundIconBtn(
+                            iconData: Icons.add,
+                            onPressed: () {
+                              setState(() {
+                                age++;
+                              });
+                            }),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        RoundIconBtn(
+                            iconData: Icons.minimize,
+                            onPressed: () {
+                              setState(() {
+                                age--;
+                              });
+                            })
+                      ],
+                    )
+                  ],
+                ),
               )),
             ],
           )),
@@ -163,18 +208,22 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-class RoundWidget extends StatelessWidget {
-  RoundWidget({this.roundChild});
-  final Widget? roundChild;
+class RoundIconBtn extends StatelessWidget {
+  const RoundIconBtn({required this.onPressed, required this.iconData});
+  final Function() onPressed;
+  final IconData iconData;
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {},
-      child: roundChild,
+      child: Icon(
+        iconData,
+        size: 25,
+      ),
+      onPressed: onPressed,
+      constraints: BoxConstraints.tightFor(width: 50, height: 50),
       shape: CircleBorder(),
       fillColor: Colors.purple,
-      elevation: 5.0,
-      constraints: BoxConstraints.tightFor(width: 50, height: 50.0),
     );
   }
 }
